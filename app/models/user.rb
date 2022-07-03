@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# 使用者
 class User < ApplicationRecord
   attr_accessor :password
 

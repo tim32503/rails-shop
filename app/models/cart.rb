@@ -13,7 +13,7 @@ class Cart < ApplicationRecord
     if found_item
       found_item.increment(quantity)
     else
-      cart_items.create!(product_id: available_product.id, quantity: quantity, total: quantity * available_product.price)
+      cart_items.create!(product_id: available_product.id, quantity: quantity)
     end
   end
 

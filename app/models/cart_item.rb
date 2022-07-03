@@ -5,7 +5,16 @@ class CartItem < ApplicationRecord
   belongs_to :cart
   belongs_to :product
 
+  before_save :calculate_total
+
   def increment(quantity = 1)
-    self.quantity += quantity
+    update!(quantity: self.quantity += quantity)
+  end
+
+  private
+
+  def calculate_total
+    product = Product.find_by(id: product_id)
+    self.total = self.quantity * product.price
   end
 end
