@@ -14,5 +14,13 @@ Rails.application.routes.draw do
         post :buy
       end
     end
+
+    resources :carts, only: %i[index] do
+      collection do
+        post :checkout
+      end
+    end
+
+    delete :carts, controller: :carts, action: :destroy
   end
 end
