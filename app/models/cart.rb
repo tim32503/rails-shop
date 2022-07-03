@@ -7,7 +7,7 @@ class Cart < ApplicationRecord
   has_many :products, through: :cart_items
 
   def add_item(product, quantity = 1)
-    available_product = Product.find_by(id: product.id, is_available: true)
+    available_product = Product.available.find_by(id: product.id)
     found_item = cart_items.includes(:product).find_by(products: { id: available_product.id })
 
     if found_item

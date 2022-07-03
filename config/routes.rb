@@ -8,5 +8,11 @@ Rails.application.routes.draw do
         post :sign_in
       end
     end
+
+    resources :products, except: [:edit] do
+      member do
+        post :buy
+      end
+    end
   end
 end
