@@ -5,11 +5,11 @@ require 'rails_helper'
 RSpec.describe Cart, type: :model do
   let!(:user) { create(:user) }
 
-  describe '購物車基本功能' do
-    before(:each) do
-      @cart = user.create_cart
-    end
+  before(:each) do
+    @cart = user.create_cart
+  end
 
+  describe '購物車基本功能' do
     it '可以把商品加入到購物車' do
       products = create_list(:product, 2)
 
@@ -49,13 +49,25 @@ RSpec.describe Cart, type: :model do
 
       expect(@cart.total_price.to_i).to(be(840))
     end
-
-    it '特別活動可能可搭配折扣（例如聖誕節的時候全面打 9 折，或是滿額滿千送百）'
   end
 
   describe '購物車進階功能' do
-    it '可以將購物車內容轉換成 Hash，存到 Session 裡'
-    it '可以把 Session 的內容（Hash 格式），還原成購物車的內容'
-    it '可以將購物車內容進行結帳，並成立訂單'
+    it '可以將購物車內容進行結帳，並成立訂單' do
+      p1 = create(:product, price: 80.0)
+      p2 = create(:product, price: 200.0)
+
+      3.times do
+        @cart.add_item(p1)
+        @cart.add_item(p2)
+      end
+
+      order = @cart.checkout
+      @cart.destroy!
+
+      user.reload
+
+      expect(order.total_price.to_i).to(be(840))
+      expect(user.cart.blank?).to(be(true))
+    end
   end
 end

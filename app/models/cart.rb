@@ -23,6 +23,31 @@ class Cart < ApplicationRecord
     cart_items.blank?
   end
 
+  def checkout
+    # 依照購物車資訊建立訂單主要資訊
+    order = user.orders.create!(
+      status: 'paid',
+      total_price: total_price,
+      subtotal: subtotal,
+      discount: discount
+    )
+
+    cart_items.each do |cart_item|
+      order.order_items.create!(
+        product_id: cart_item.product_id,
+        quantity: cart_item.quantity,
+        original_price: cart_item.product.price,
+        subtotal: cart_item.quantity * cart_item.product.price,
+        discount: 0
+      )
+
+      cart_item.product.update!(inventory: cart_item.product.inventory - cart_item.quantity)
+      cart_item.destroy!
+    end
+
+    order
+  end
+
   private
 
   def calculate_cart_total
