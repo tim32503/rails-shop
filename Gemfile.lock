@@ -83,6 +83,8 @@ GEM
     erubi (1.10.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
+    faker (2.21.0)
+      i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -229,6 +231,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   factory_bot (~> 6.2, >= 6.2.1)
+  faker (~> 2.21)
   jbuilder (~> 2.7)
   listen (~> 3.3)
   puma (~> 5.0)
