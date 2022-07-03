@@ -15,9 +15,17 @@ class Cart < ApplicationRecord
     else
       cart_items.create!(product_id: available_product.id, quantity: quantity)
     end
+
+    calculate_cart_total
   end
 
   def empty?
     cart_items.blank?
+  end
+
+  private
+
+  def calculate_cart_total
+    update!(subtotal: cart_items.sum(:total), discount: 0, total_price: cart_items.sum(:total))
   end
 end
