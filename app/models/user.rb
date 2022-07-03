@@ -5,6 +5,7 @@ class User < ApplicationRecord
   attr_accessor :password
 
   has_one :cart
+  has_many :orders
 
   before_create :encrypt_password
   before_create :genarate_auth_token
