@@ -1,0 +1,33 @@
+<%= link_to '首頁', root_path %>
+<% if user_signed_in? %>
+  <%= button_to '登出', destroy_user_session_path, method: :delete %>
+  <%# link_to '新增產品', new_product_path %>
+  <%# link_to '我的訂單', orders_path %>
+  <%# link_to '我的帳戶', edit_user_registration_path %>
+<% else %>
+  <%= link_to '登入', new_user_session_path %>
+  <%= link_to '註冊', new_user_registration_path %>
+<% end %>
+
+<h1>購物車</h1>
+
+<table>
+  <tr>
+    <th>名稱</th>
+    <th>價格</th>
+    <th>數量</th>
+    <th>小計</th>
+    <th>動作</th>
+  </tr>
+  <% @cart_items&.each do |cart_item| %>
+    <tr>
+      <td><%= cart_item.product.name %></td>
+      <td><%= cart_item.product.price %></td>
+      <td><%= cart_item.quantity %></td>
+      <td><%= cart_item.total %></td>
+      <td>
+        <%# button_to '刪除', cart_item, method: :delete %>
+      </td>
+    </tr>
+  <% end %>
+</table>
