@@ -6,19 +6,13 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  attr_accessor :password
 
-  has_one :cart
-  has_many :orders
+  has_one :cart, dependent: :destroy
+  has_many :orders, dependent: :destroy
 
-  before_create :encrypt_password
   before_create :genarate_auth_token
 
   private
-
-  def encrypt_password
-    self.encrypted_password = Digest::MD5.hexdigest(password)
-  end
 
   def genarate_auth_token
     self.auth_token = SecureRandom.base58(50)

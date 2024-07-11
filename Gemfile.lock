@@ -275,6 +275,7 @@ PLATFORMS
   x86_64-darwin-19
 
 DEPENDENCIES
+  bcrypt
   bootsnap
   capybara
   debug
