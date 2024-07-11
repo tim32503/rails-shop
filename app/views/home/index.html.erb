@@ -2,7 +2,7 @@
   <%= link_to '登出', destroy_user_session_path, method: :delete %>
   <%# link_to '新增產品', new_product_path %>
   <%# link_to '我的訂單', orders_path %>
-  <%# link_to '我的購物車', carts_path %>
+  <%= link_to "我的購物車 (#{@cart_item_count})", cart_path %>
   <%# link_to '我的帳戶', edit_user_registration_path %>
 <% else %>
   <%= link_to '登入', new_user_session_path %>
@@ -24,7 +24,7 @@
       <td><%= product.price %></td>
       <td><%= product.inventory %></td>
       <td>
-        <%# link_to '購買', edit_product_path(product) %>
+        <%= button_to '加入購物車', purchase_product_path(product) %>
       </td>
     </tr>
   <% end %>
