@@ -24,4 +24,6 @@ Rails.application.routes.draw do
 
     delete :carts, controller: :carts, action: :destroy
   end
+
+  root to: 'home#index'
 end
