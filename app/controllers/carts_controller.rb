@@ -25,7 +25,7 @@ class CartsController < ApplicationController
       TimeStamp: Time.now.to_i,
       Version: 2.0, # 串接版本
       MerchantOrderNo: Time.now.to_formatted_s(:number), # 商店訂單編號
-      Amt: current_cart.total_price || 0, # 訂單金額
+      Amt: current_cart.total_price.to_i || 0, # 訂單金額
       ItemDesc: items_description,
       NotifyURL: newebpay_callback_cart_url # 付款通知網址
     }.to_query
