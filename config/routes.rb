@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   resource :cart do
     post :checkout
+    get :newebpay_callback
   end
 
   resources :products do

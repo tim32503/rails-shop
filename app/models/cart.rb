@@ -42,8 +42,9 @@ class Cart < ApplicationRecord
       )
 
       cart_item.product.update!(inventory: cart_item.product.inventory - cart_item.quantity)
-      cart_item.destroy!
     end
+
+    destroy!
 
     order
   end
