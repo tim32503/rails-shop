@@ -25,7 +25,9 @@ Rails.application.routes.draw do
   #   # delete :carts, controller: :carts, action: :destroy
   # end
 
-  resource :cart
+  resource :cart do
+    post :checkout
+  end
 
   resources :products do
     member do
