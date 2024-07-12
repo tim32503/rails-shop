@@ -5,3 +5,13 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+# 使用 Faker 產生產品假資料
+50.times do
+  Product.create(
+    name: Faker::Commerce.product_name,
+    price: Faker::Commerce.price(range: 50..500),
+    inventory: Faker::Number.between(from: 1, to: 100),
+    is_available: Faker::Boolean.boolean
+  )
+end
