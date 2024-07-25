@@ -33,10 +33,10 @@
 </table>
 
 <%# button_to '結帳', checkout_cart_path %>
-<%= form_with url: 'https://ccore.newebpay.com/MPG/mpg_gateway' do |f| %>
-  <%= hidden_field_tag 'MerchantID', Rails.application.credentials.dig(:newebpay, :merchant_id) %>
-  <%= hidden_field_tag 'TradeInfo', @encrypted_data %>
-  <%= hidden_field_tag 'TradeSha', @hash_text %>
-  <%= hidden_field_tag 'Version', '2.0' %>
+<%= form_with url: @service.api_url do |f| %>
+  <%= hidden_field_tag 'MerchantID', @service.merchant_id %>
+  <%= hidden_field_tag 'TradeInfo', @service.encrypted_string %>
+  <%= hidden_field_tag 'TradeSha', @service.check_code %>
+  <%= hidden_field_tag 'Version', @service.version.to_s %>
   <%= f.submit '結帳' %>
 <% end %>
