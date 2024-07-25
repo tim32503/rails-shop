@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class NewebpayService
-  attr_reader :api_url, :merchant_id, :encrypted_string, :check_code, :version
+  attr_reader :api_url
 
   def initialize(user:, return_url: nil, notify_url: nil)
     # 使用者資訊
@@ -21,6 +21,15 @@ class NewebpayService
 
   def encrypt
     generate_query_string && encrypt_query_string && generate_check_code
+  end
+
+  def form_info
+    {
+      MerchantID: @merchant_id,
+      Version: @version,
+      TradeInfo: @encrypted_string,
+      TradeSha: @check_code
+    }
   end
 
   private

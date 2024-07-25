@@ -34,9 +34,9 @@
 
 <%# button_to '結帳', checkout_cart_path %>
 <%= form_with url: @service.api_url do |f| %>
-  <%= hidden_field_tag 'MerchantID', @service.merchant_id %>
-  <%= hidden_field_tag 'TradeInfo', @service.encrypted_string %>
-  <%= hidden_field_tag 'TradeSha', @service.check_code %>
-  <%= hidden_field_tag 'Version', @service.version.to_s %>
+  <% @service.form_info.each do |key, value| %>
+    <%= hidden_field_tag key, value %>
+  <% end %>
+
   <%= f.submit '結帳' %>
 <% end %>
