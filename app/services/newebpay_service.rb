@@ -2,11 +2,9 @@
 
 class NewebpayService
   attr_reader :api_url
+  attr_writer :user, :return_url, :response_data
 
-  def initialize(user:, return_url: nil, notify_url: nil)
-    # 使用者資訊
-    @user = user
-
+  def initialize
     # Newebpay 商店資訊
     @merchant_id = Rails.application.credentials.dig(:newebpay, :merchant_id)
     @hash_key = Rails.application.credentials.dig(:newebpay, :hash_key)
@@ -15,12 +13,20 @@ class NewebpayService
     # Newebpay API 資訊
     @version = 2.0
     @api_url = 'https://ccore.newebpay.com/MPG/mpg_gateway'
-    @return_url = return_url
-    @notify_url = notify_url
   end
 
   def encrypt
     generate_query_string && encrypt_query_string && generate_check_code
+  end
+
+  def decrypt
+    encrypted_data = [raw_data].pack('H*')
+
+    decipher = OpenSSL::Cipher.new('AES-256-CBC')
+    decipher.decrypt
+    decipher.key = @hash_key
+    decipher.iv = @hash_iv
+    decipher.padding = 0  # 停用 padding
   end
 
   def form_info
@@ -56,8 +62,7 @@ class NewebpayService
         MerchantOrderNo: Time.now.to_formatted_s(:number), # TODO: 改用參數待入商店訂單編號
         Amt: current_cart.total_price.to_i || 0,
         ItemDesc: items_description,
-        ReturnURL: @return_url,
-        NotifyURL: @notify_url
+        ReturnURL: @return_url
       }.to_query
 
     true

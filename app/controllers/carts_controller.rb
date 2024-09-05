@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
   before_action :authenticate_user!, except: %i[newebpay_callback]
+  skip_before_action :verify_authenticity_token, only: %i[newebpay_callback]
 
   def show
     @cart_items = current_cart.cart_items.includes(:product)
